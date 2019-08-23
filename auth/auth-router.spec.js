@@ -95,10 +95,41 @@ describe('server', () => {
                 })
                 .then(res => {
                     expect(res.status).toBe(200);
-                })
+                });
         });
     });
 
+    describe('GET /jokes', () => {
+        it('returns JSON', async () => {
+            await request(server)
+            .post('/api/auth/register')
+            .send({
+                username: 'Karl',
+                password: 'money'
+            });
 
+
+        await request(server)
+            .post('/api/auth/login')
+            .send({
+                username: 'Karl',
+                password: 'money'
+            });
+
+        await request(server)
+            .get('/api/jokes')
+            .then(res => {
+                expect(res.type).toMatch(/json/);
+            });
+        });
+    });
+
+    it('returns 400 no token', () => {
+        return request(server)
+            .get('/api/jokes')
+            .then(res => {
+                expect(res.status).toBe(400);
+            });
+    });
 
 });
