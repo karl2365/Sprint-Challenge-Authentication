@@ -55,7 +55,6 @@ describe('server', () => {
                     password: 'homer'
                 })
                 .then(res => {
-                    // matching on regular expression
                     expect(res.type).toMatch(/json/);
                 });
         });
